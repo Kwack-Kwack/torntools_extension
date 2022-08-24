@@ -504,7 +504,7 @@ async function setupPreferences(requireCleanup) {
 			}
 		});
 	});
-
+	
 	fillSettings();
 	requestPermissions();
 	searchPreferences();

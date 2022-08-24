@@ -11,7 +11,7 @@
 		addLinks,
 		removeLinks,
 		{
-			storage: ["settings.pages.sidebar.barLinks"],
+			storage: ["settings.pages.sidebar.barLinks", "settings.pages.sidebar.barLinks_lifeLink"],
 		},
 		null
 	);
@@ -19,13 +19,12 @@
 	const LINKS = {
 		barEnergy: "https://www.torn.com/gym.php",
 		barNerve: "https://www.torn.com/crimes.php",
-		barLife: "https://www.torn.com/item.php#medical-items",
+		barLife: settings.pages.sidebar.barLinks_lifeLink == "0" ? "https://www.torn.com/item.php#medical-items" : "https://www.torn.com/factions.php?step=your#/tab=armoury&start=0&sub=medical",
 		barChain: "https://www.torn.com/factions.php?step=your#/war/chain",
 	};
 
 	async function addLinks() {
 		await requireSidebar();
-
 		for (const id in LINKS) {
 			const barLink = document.find(`#${id}`);
 			if (!barLink) continue;

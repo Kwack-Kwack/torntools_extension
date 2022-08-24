@@ -415,6 +415,7 @@ const DEFAULT_STORAGE = {
 				hideGymHighlight: new DefaultSetting({ type: "boolean", defaultValue: false }),
 				upkeepPropHighlight: new DefaultSetting({ type: "number", defaultValue: 0 }),
 				barLinks: new DefaultSetting({ type: "boolean", defaultValue: true }),
+				barLinks_lifeLink: new DefaultSetting({ type: "string", defaultValue: "0"}),
 				pointsValue: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				npcLootTimes: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				npcLootTimesService: new DefaultSetting({ type: "string", defaultValue: "tornstats" }),

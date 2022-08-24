@@ -19,6 +19,7 @@
 	const LINKS = {
 		barEnergy: "https://www.torn.com/gym.php",
 		barNerve: "https://www.torn.com/crimes.php",
+		barLife: "https://www.torn.com/item.php#medical-items"
 	};
 
 	async function addLinks() {

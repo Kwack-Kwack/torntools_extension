@@ -584,7 +584,7 @@ async function setupMarketSearch() {
 
 			let found = false;
 
-			for (const type of Object.keys(result)) {
+			for (const type in result) {
 				let text;
 				if (type === "itemmarket") text = "Item Market";
 				else text = capitalizeText(type);

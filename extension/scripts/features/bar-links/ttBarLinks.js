@@ -26,7 +26,7 @@
 	async function addLinks() {
 		await requireSidebar();
 
-		for (const id of Object.keys(LINKS)) {
+		for (const id in LINKS) {
 			const barLink = document.find(`#${id}`);
 			if (!barLink) continue;
 
@@ -56,7 +56,7 @@
 	}
 
 	function removeLinks() {
-		for (const id of Object.keys(LINKS)) {
+		for (const id in LINKS) {
 			const barName = document.find(`#${id} .bar-link`);
 			if (!barName) continue;
 

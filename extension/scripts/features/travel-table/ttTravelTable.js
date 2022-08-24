@@ -79,7 +79,7 @@
 			});
 
 			const data = await pullInformation();
-			for (const code of Object.keys(data.stocks)) {
+			for (const code in data.stocks) {
 				const country = COUNTRIES[code];
 				const lastUpdate = data.stocks[code].update;
 

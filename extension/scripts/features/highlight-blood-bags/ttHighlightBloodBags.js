@@ -64,7 +64,7 @@
 			const itemId = parseInt(item.dataset.item || item.find(".img-wrap").dataset.itemid);
 			if (itemId === 1012) continue; // is an irradiated blood bag
 
-			item.find(".name-wrap, .name").parentNode.parentNode.parentNode.classList.add(allowedBlood.includes(itemId) ? "good-blood" : "bad-blood");
+			page === "item" ? item.find(".name-wrap, .name").parentNode.parentNode.parentNode.classList.add(allowedBlood.includes(itemId) ? "good-blood" : "bad-blood") : item.find(".name-wrap, .name").parentNode.classList.add(allowedBlood.includes(itemId) ? "good-blood" : "bad-blood");
 
 			if (page === "factions") {
 				if (item.find(".tt-item-price")) item.find(".tt-item-price").remove();

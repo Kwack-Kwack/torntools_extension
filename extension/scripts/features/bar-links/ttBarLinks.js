@@ -19,7 +19,8 @@
 	const LINKS = {
 		barEnergy: "https://www.torn.com/gym.php",
 		barNerve: "https://www.torn.com/crimes.php",
-		barLife: "https://www.torn.com/item.php#medical-items"
+		barLife: "https://www.torn.com/item.php#medical-items",
+		barChain: "https://www.torn.com/factions.php?step=your#/war/chain",
 	};
 
 	async function addLinks() {

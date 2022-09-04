@@ -194,7 +194,7 @@
 				task: "Defeat (P).",
 			},
 			lost_and_found: {
-				task: "Put (P) in the hospital for 12 hours.",
+				task: "Put (P) in the hospital for 12 hours.  Reviving targets will not decrease the amount of time recorded.",
 			},
 			loud_and_clear: {
 				task: "Use 3 - 11 explosive grenades.",

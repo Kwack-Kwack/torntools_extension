@@ -1,7 +1,7 @@
 "use strict";
 
 (async () => {
-	await requireElement("body");
+	await requireSidebar();
 
 	featureManager.registerFeature(
 		"Highlight Energy Refill",
@@ -20,7 +20,7 @@
 
 	function applyStyle() {
 		if (!userdata.refills.energy_refill_used && settings.pages.sidebar.highlightEnergy)
-			document.documentElement.classList.add("tt-highlight-energy-refill");
-		else document.documentElement.classList.remove("tt-highlight-energy-refill");
+			document.getElementById("barEnergy").classList.add("tt-highlight-energy-refill");
+		else document.getElementById("barEnergy").classList.remove("tt-highlight-energy-refill");
 	}
 })();

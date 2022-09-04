@@ -1,16 +1,31 @@
 [
 	{
+		"version": { "major": 6, "minor": 10, "build": 0},
+		"title": "Custom",
+		"date": false,
+		"logs": {
+			"features": [
+				{ "message": "Added links to both Chain and Life Bars", "contributor": "Kwack"},
+				{ "message": "Added options for whether Life Bar link directs to Items or Faction Armoury", "contributor": "Kwack"}
+			],
+			"fixes": [
+				{ "message": "Minor performance fixes", "contributor": "Kwack"}
+			],
+			"changes": [
+				{ "message": "All chat usernames are now highlighted, this is a custom feature and not an option. If, for some reason, you're using my fork and hate this option, please let me know and I can add it to settings", "contributor": "Kwack"},
+				{ "message": "Blood bag highlights now highlight the whole row, instead of just part of the bar", "contributor": "Kwack"}
+			]
+		}
+	},
+	{
 		"version": { "major": 6, "minor": 9, "build": 0 },
 		"title": "Beta",
 		"date": false,
 		"logs": {
-			"features": [],
 			"fixes": [
 				{ "message": "Fix settings saving for Hide Icons and Custom Links.", "contributor": "bandirao" },
 				{ "message": "Fix Hospital & Jail filters on page changing on Firefox.", "contributor": "bandirao" }
-			],
-			"changes": [],
-			"removed": []
+			]
 		}
 	},
 	{

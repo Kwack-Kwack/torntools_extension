@@ -472,6 +472,7 @@ const DEFAULT_STORAGE = {
 			},
 			crimes: {
 				quickCrimes: new DefaultSetting({ type: "boolean", defaultValue: true }),
+				kidnapWarnings: new DefaultSetting({ type: "boolean", defaultValue: false}),
 			},
 			companies: {
 				specials: new DefaultSetting({ type: "boolean", defaultValue: true }),

@@ -1,6 +1,8 @@
 "use strict";
 
-async () => {
+(async () => {
+	if (!getPageStatus().access) return;
+
 	const feature = featureManager.registerFeature(
 		"Kidnapping Warnings",
 		"crimes",
@@ -8,20 +10,30 @@ async () => {
 		initialise,
 		hideKidnaps,
 		unhideKidnaps,
-		{ storage: ["settings.pages.crimes.kidnapWarnings"] },
+		{
+			storage: ["settings.pages.crimes.kidnapWarnings"]
+		},
 		null
 	);
 
 	function initialise() {
-		CUSTOM_LISTENERS[EVENT_CHANNELS.CRIMES_CRIME].push(() => {
+		CUSTOM_LISTENERS[EVENT_CHANNELS.CRIMES_LOADED].push(() => {
 			if (!feature.enabled()) return;
-
-			hideKidnaps();
 		});
 	}
 
 	async function hideKidnaps() {
 		await requireSidebar();
+		async () => {
+			return await new Promise(() => {
+				let checker = setInterval(() => {
+					if(document.find(".div.msg-right-round").innerHTML.includes("Kidnapping is a risky business")) {
+						console.log("user is kidnapping")
+						clearInterval(checker)
+					}
+				}, 300)
+			})
+		}
 		const cash = parseInt(document.querySelector("#user-money").innerHTML.split(",").join("").substring(1));
 		if (cash > 75000) return;
 		const msg = document.find(".msg.right-round");
@@ -48,15 +60,16 @@ async () => {
 			: cash < 75000
 			? (hideCrime = [false, false, false, true])
 			: (hideCrime = [false, false, false, false]);
-	}
 
-	for (var i = 0; i < 4; i++) {
-		if (hideCrime[i]) {
-			document.findAll("todo")[i].classList.add("tt-hidden");
+
+		for (var i = 0; i < 4; i++) {
+			if (hideCrime[i]) {
+				document.findAll("todo")[i].classList.add("tt-hidden");
+			}
 		}
 	}
 
 	function unhideKidnaps() {
 		document.findAll(".tt-hidden").forEach((element) => element.classList.remove("tt-hidden"))
 	}
-};
+})();

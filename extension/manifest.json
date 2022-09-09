@@ -21,7 +21,7 @@
 			"scripts/background.js"
 		]
 	},
-	"permissions": ["storage", "notifications", "background", "https://api.torn.com/"],
+	"permissions": ["storage", "notifications", "background", "contextMenus", "https://api.torn.com/"],
 	"optional_permissions": [
 		"https://www.tornstats.com/",
 		"https://yata.yt/",
@@ -107,7 +107,8 @@
 				"scripts/features/achievements/achievements.js",
 				"scripts/features/achievements/ttAchievements.entry.js",
 				"scripts/features/hide-tutorials/ttHideTutorials.entry.js",
-				"scripts/features/hide-chat/ttHideChat.entry.js"
+				"scripts/features/hide-chat/ttHideChat.entry.js",
+				"scripts/features/copy-id/ttCopyID.js"
 			],
 			"run_at": "document_start"
 		},
@@ -689,8 +690,13 @@
 		},
 		{
 			"matches": ["https://www.torn.com/crimes.php*"],
-			"css": ["scripts/features/quick-crimes/ttQuickCrimes.css"],
-			"js": ["vendor/drag-drop-touch/DragDropTouch.js", "scripts/content/crimes/ttCrimes.js", "scripts/features/quick-crimes/ttQuickCrimes.js"],
+			"css": ["scripts/features/quick-crimes/ttQuickCrimes.css", "scripts/features/kidnapping-warnings/ttKidnappingWarnings.css"],
+			"js": [
+				"vendor/drag-drop-touch/DragDropTouch.js",
+				"scripts/content/crimes/ttCrimes.js",
+				"scripts/features/quick-crimes/ttQuickCrimes.js",
+				"scripts/features/kidnapping-warnings/ttKidnappingWarnings.js"
+			],
 			"run_at": "document_end"
 		},
 		{

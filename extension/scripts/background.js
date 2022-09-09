@@ -42,6 +42,8 @@ let npcUpdater;
 	storageListeners.settings.push(async () => {
 		await showIconBars();
 	});
+
+	await addContextMenus();
 })();
 
 async function convertDatabase() {
@@ -1525,4 +1527,34 @@ function getAudioPlayer() {
 function storeNotification(notification) {
 	notificationHistory.insertAt(0, notification);
 	notificationHistory = notificationHistory.slice(0, 100);
+}
+
+async function addContextMenus() {
+	chrome.contextMenus.removeAll(() => {
+		if (settings.pages.global.copyID) {
+			chrome.contextMenus.create({
+				id: "copyid",
+				title: "Copy ID",
+				contexts: ["link"],
+				documentUrlPatterns: ["*://*.torn.com/*"],
+			});
+
+			chrome.contextMenus.onClicked.addListener((info, tab) => {
+				copyID(info.linkUrl, tab);
+			});
+		}
+	});
+	
+	async function copyID(url, tab) {
+		if (settings.pages.global.copyID) {
+			try {
+				chrome.tabs.sendMessage(tab.id, url);
+			} catch (err) {
+				console.error(err);
+			}
+		} else {
+			console.log("Copy ID contextmenu disabled")
+		}
+	}
+	
 }

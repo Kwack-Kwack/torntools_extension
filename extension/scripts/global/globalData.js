@@ -379,6 +379,7 @@ const DEFAULT_STORAGE = {
 				reviveProvider: new DefaultSetting({ type: "string", defaultValue: "" }),
 				pageTitles: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				stackingMode: new DefaultSetting({ type: "boolean", defaultValue: false }),
+				copyID: new DefaultSetting({ type: "boolean", defaultValue: true }),
 			},
 			profile: {
 				statusIndicator: new DefaultSetting({ type: "boolean", defaultValue: true }),
@@ -415,7 +416,7 @@ const DEFAULT_STORAGE = {
 				hideGymHighlight: new DefaultSetting({ type: "boolean", defaultValue: false }),
 				upkeepPropHighlight: new DefaultSetting({ type: "number", defaultValue: 0 }),
 				barLinks: new DefaultSetting({ type: "boolean", defaultValue: true }),
-				barLinks_lifeLink: new DefaultSetting({ type: "string", defaultValue: "0"}),
+				barLinks_lifeLink: new DefaultSetting({ type: "string", defaultValue: "0" }),
 				pointsValue: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				npcLootTimes: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				npcLootTimesService: new DefaultSetting({ type: "string", defaultValue: "tornstats" }),
@@ -472,7 +473,7 @@ const DEFAULT_STORAGE = {
 			},
 			crimes: {
 				quickCrimes: new DefaultSetting({ type: "boolean", defaultValue: true }),
-				kidnapWarnings: new DefaultSetting({ type: "boolean", defaultValue: false}),
+				kidnapWarnings: new DefaultSetting({ type: "boolean", defaultValue: false }),
 			},
 			companies: {
 				specials: new DefaultSetting({ type: "boolean", defaultValue: true }),

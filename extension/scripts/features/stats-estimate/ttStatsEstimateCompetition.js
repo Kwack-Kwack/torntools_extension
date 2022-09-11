@@ -51,7 +51,7 @@
 		statsEstimate.showEstimates(
 			".competition-list > li",
 			(row) => ({
-				id: row.find(".user.name > [title]").getAttribute("title").match(/(\d+)/g)?.last(),
+				id: row.find(".user.name").find("[title]").getAttribute("title").match(/(\d+)/g)?.last(),
 				level: row.find(".level").textContent.getNumber(),
 			}),
 			true

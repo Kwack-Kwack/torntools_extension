@@ -1,22 +1,48 @@
 [
 	{
-		"version": { "major": 6, "minor": 9, "build": 0 },
+		"version": { "major": 6, "minor": 9, "build": 1 },
 		"title": "Beta",
 		"date": false,
 		"logs": {
 			"features": [],
 			"fixes": [
-				{ "message": "Fix settings saving for Hide Icons and Custom Links.", "contributor": "TheFoxMan" },
-				{ "message": "Fix Hospital & Jail filters on page changing on Firefox.", "contributor": "bandirao" },
-				{ "message": "Fix cleanup code in settings.", "contributor": "bandirao" }
+				{ "message": "Fix stakeouts reset accidentally causing settings reset.", "contributor": "TheFoxMan" },
+				{ "message": "Fix education notification issue.", "contributor": "DeKleineKobini" },
+				{ "message": "Properly fix profits on abroad market pages on mobiles & tablets.", "contributor": "TheFoxMan" },
+				{ "message": "Fix travel table faction perks not being counted.", "contributor": "DeKleineKobini" }
 			],
-			"changes": [],
+			"changes": [
+				{ "message": "Switch feature manager popup to new layout.", "contributor": "TheFoxMan" },
+				{ "message": "Update Logistics specials wording.", "contributor": "Acarya" },
+				{ "message": "Change item price layout on tablets.", "contributor": "TheFoxMan" },
+				{ "message": "Make cooldown end times available again on mobiles & tablets.", "contributor": "TheFoxMan" },
+				{ "message": "Allow requesting revives from Shadow Healers.", "contributor": "Lazerpent" },
+				{ "message": "Update HeLa revive request script.", "contributor": "Lazerpent" }
+			],
 			"removed": []
 		}
 	},
 	{
+		"version": { "major": 6, "minor": 9, "build": 0 },
+		"date": "2022/09/16",
+		"logs": {
+			"fixes": [
+				{ "message": "Fix settings saving for Hide Icons and Custom Links.", "contributor": "TheFoxMan" },
+				{ "message": "Fix Hospital & Jail filters on page changing on Firefox.", "contributor": "TheFoxMan" },
+				{ "message": "Fix custom notification sound messing settings.", "contributor": "TheFoxMan" },
+				{ "message": "Fix cleanup code in settings.", "contributor": "TheFoxMan" },
+				{ "message": "Fix item profits in market on tablet mode.", "contributor": "TheFoxMan" },
+				{ "message": "Fix Stats Estimates on Elimination page.", "contributor": "TheFoxMan" }
+			],
+			"changes": [
+				{ "message": "Add option to disable Quick Crimes.", "contributor": "TheFoxMan" },
+				{ "message": "Modify (disable) various features on tablet mode.", "contributor": "TheFoxMan" },
+				{ "message": "Update HeLa revive request script.", "contributor": "No1IrishStig" }
+			]
+		}
+	},
+	{
 		"version": { "major": 6, "minor": 8, "build": 0 },
-		"title": "Beta",
 		"date": "2022/08/18",
 		"logs": {
 			"fixes": [
@@ -57,7 +83,7 @@
 				{ "message": "Rename TCB to TCI.", "contributor": "DeKleineKobini" },
 				{ "message": "Don't duplicate url entries when copying forum posts for Discord.", "contributor": "DeKleineKobini" },
 				{ "message": "Add compatability with the faction stats script for the ranked war filter.", "contributor": "DeKleineKobini" },
-				{ "message": "Allow requesting revives from HeLa", "contributor": "dat-mule" },
+				{ "message": "Allow requesting revives from HeLa.", "contributor": "dat-mule" },
 				{ "message": "Allow disabling notifications without removing timer numbers.", "contributor": "josephting" }
 			]
 		}

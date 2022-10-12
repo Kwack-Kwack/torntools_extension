@@ -18,6 +18,7 @@ const FETCH_PLATFORMS = {
 	uhc: "https://tornuhc.eu/",
 	imperium: "https://inq.mavri.dev/",
 	hela: "https://api.no1irishstig.co.uk/",
+	shadow_healers: "https://api.no1irishstig.co.uk/",
 };
 
 const FACTION_ACCESS = {
@@ -114,6 +115,11 @@ async function fetchData(location, options = {}) {
 					break;
 				case "hela":
 					url = FETCH_PLATFORMS.hela;
+
+					path = options.section;
+					break;
+				case "shadow_healers":
+					url = FETCH_PLATFORMS.shadow_healers;
 
 					path = options.section;
 					break;

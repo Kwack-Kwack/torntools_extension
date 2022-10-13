@@ -9,7 +9,8 @@
 				{ "message": "Fix stakeouts reset accidentally causing settings reset.", "contributor": "TheFoxMan" },
 				{ "message": "Fix education notification issue.", "contributor": "DeKleineKobini" },
 				{ "message": "Properly fix profits on abroad market pages on mobiles & tablets.", "contributor": "TheFoxMan" },
-				{ "message": "Fix travel table faction perks not being counted.", "contributor": "DeKleineKobini" }
+				{ "message": "Fix travel table faction perks not being counted.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix align left no longer working.", "contributor": "DeKleineKobini" }
 			],
 			"changes": [
 				{ "message": "Switch feature manager popup to new layout.", "contributor": "TheFoxMan" },
@@ -17,7 +18,8 @@
 				{ "message": "Change item price layout on tablets.", "contributor": "TheFoxMan" },
 				{ "message": "Make cooldown end times available again on mobiles & tablets.", "contributor": "TheFoxMan" },
 				{ "message": "Allow requesting revives from Shadow Healers.", "contributor": "Lazerpent" },
-				{ "message": "Update HeLa revive request script.", "contributor": "Lazerpent" }
+				{ "message": "Update HeLa revive request script.", "contributor": "Lazerpent" },
+				{ "message": "Message on force update.", "contributor": "DeKleineKobini" }
 			],
 			"removed": []
 		}

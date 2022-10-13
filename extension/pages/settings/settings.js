@@ -5,7 +5,7 @@ const initiatedPages = {};
 (async () => {
 	initializeInternalPage({ sortTables: true });
 	await loadDatabase();
-	await showPage(getSearchParameters().get("page") || "changelog");
+	await showPage(getSearchParameters().get("page") || "preferences");
 
 	document.body.classList.add(getPageTheme());
 
@@ -199,6 +199,7 @@ function cleanupPreferences() {
 
 async function setupPreferences(requireCleanup) {
 	if (requireCleanup) cleanupPreferences();
+	searchPreferences();
 
 	const _preferences = document.find("#preferences");
 	_preferences.addEventListener("click", addSaveDialog);
@@ -488,6 +489,7 @@ async function setupPreferences(requireCleanup) {
 		else if (provider === "uhc") origin = FETCH_PLATFORMS.uhc;
 		else if (provider === "imperium") origin = FETCH_PLATFORMS.imperium;
 		else if (provider === "hela") origin = FETCH_PLATFORMS.hela;
+		else if (provider === "shadow_healers") origin = FETCH_PLATFORMS.shadow_healers;
 
 		if (!origin) return;
 
@@ -507,7 +509,6 @@ async function setupPreferences(requireCleanup) {
 	
 	fillSettings();
 	requestPermissions();
-	searchPreferences();
 	storageListeners.settings.push(updateSettings);
 	if (isIframe) {
 		window.addEventListener("message", async (event) => {
@@ -546,7 +547,6 @@ async function setupPreferences(requireCleanup) {
 		_preferences.find(`input[name="formatTime"][value="${settings.formatting.time}"]`).checked = true;
 		_preferences.find(`input[name="themePage"][value="${settings.themes.pages}"]`).checked = true;
 		_preferences.find(`input[name="themeContainers"][value="${settings.themes.containers}"]`).checked = true;
-		_preferences.find(`input[name="featureDisplayPosition"][value="${settings.featureDisplayPosition}"]`).checked = true;
 
 		for (const service of ["tornstats", "yata"]) {
 			_preferences.find(`#external-${service}`).checked = settings.external[service];
@@ -639,7 +639,6 @@ async function setupPreferences(requireCleanup) {
 		_preferences.find("#notification-volume").value = settings.notifications.volume;
 		if (settings.notifications.sound === "custom") {
 			_preferences.find("#notification-sound-upload").classList.remove("tt-hidden");
-			_preferences.find("#notification-sound-upload + br").classList.remove("tt-hidden");
 		} else {
 			if (settings.notifications.sound === "mute" || settings.notifications.sound === "default") {
 				_preferences.find("#notification-volume").classList.add("tt-hidden");
@@ -930,7 +929,6 @@ async function setupPreferences(requireCleanup) {
 		settings.formatting.time = _preferences.find("input[name='formatTime']:checked").value;
 		settings.themes.pages = _preferences.find("input[name='themePage']:checked").value;
 		settings.themes.containers = _preferences.find("input[name='themeContainers']:checked").value;
-		settings.featureDisplayPosition = _preferences.find("input[name='featureDisplayPosition']:checked").value;
 
 		settings.csvDelimiter = _preferences.find("#csvDelimiter").value;
 
@@ -1242,6 +1240,7 @@ async function setupPreferences(requireCleanup) {
 			else if (reviveProvider === "uhc") origin = FETCH_PLATFORMS.uhc;
 			else if (reviveProvider === "imperium") origin = FETCH_PLATFORMS.imperium;
 			else if (reviveProvider === "hela") origin = FETCH_PLATFORMS.hela;
+			else if (reviveProvider === "shadow_healers") origin = FETCH_PLATFORMS.shadow_healers;
 
 			if (origin) origins.push(origin);
 		}

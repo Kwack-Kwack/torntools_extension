@@ -107,7 +107,7 @@
 						<li name="gym">Gym</li>
 						<li name="properties">Properties</li>
 						<li name="education">Education</li>
-						<!-- <li>Crimes</li> -->
+						<li name="crimes">Crimes</li>
 						<li name="missions">Missions</li>
 						<li name="userlist">Userlist</li>
 						<!-- <li>Newspaper</li> -->
@@ -145,17 +145,6 @@
 						<div class="option">
 							<input id="featureDisplay" type="checkbox" />
 							<label for="featureDisplay">Display running features on every page.</label>
-							<div id="featureDisplayDemo">
-								<!--suppress HtmlFormInputWithoutLabel -->
-								<input type="radio" name="featureDisplayPosition" value="top-left" class="top left" />
-								<!--suppress HtmlFormInputWithoutLabel -->
-								<input type="radio" name="featureDisplayPosition" value="top-right" class="top right" checked />
-								<!--suppress HtmlFormInputWithoutLabel -->
-								<input type="radio" name="featureDisplayPosition" value="bottom-left" class="bottom left" />
-								<!--suppress HtmlFormInputWithoutLabel -->
-								<input type="radio" name="featureDisplayPosition" value="bottom-right" class="bottom right" />
-							</div>
-							<span class="tabbed note">Position of container</span>
 						</div>
 						<div class="option tabbed">
 							<input id="featureDisplayOnlyFailed" type="checkbox" />
@@ -262,6 +251,7 @@
 								<option value="nuke">NUKE</option>
 								<option value="imperium">The Imperium</option>
 								<option value="hela">HeLa</option>
+								<option value="shadow_healers">Shadow Healers</option>
 							</select>
 							<label class="note" for="global-reviveProvider">Revives always cost $1m or 1 Xanax.</label>
 						</div>
@@ -1035,6 +1025,13 @@
 						<div class="option">
 							<input id="items-nerveGains" type="checkbox" />
 							<label for="items-nerveGains">Show alcohol nerve gains.</label>
+						</div>
+					</section>
+					<section name="crimes">
+						<div class="header">Crimes</div>
+						<div class="option">
+							<input id="crimes-quickCrimes" type="checkbox" />
+							<label for="crimes-quickCrimes">Show the quick crimes container.</label>
 						</div>
 					</section>
 					<section name="city">

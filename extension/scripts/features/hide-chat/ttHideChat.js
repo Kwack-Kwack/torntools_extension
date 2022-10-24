@@ -16,7 +16,7 @@
 
 	function showButton() {
 		const settingsBox = document.find("#chatRoot [class*='_chat-box-settings_']");
-		if (!settingsBox.classList.contains("^=_chat-active_")) return;
+		if (!settingsBox || !settingsBox.classList.contains("^=_chat-active_")) return;
 
 		const overview = settingsBox.find("[class*='overview_']");
 		if (overview.find(".tt-hide-chat-option")) return;

@@ -138,7 +138,7 @@
 	top: 5px;
 	right: calc((100vw - 976px) / 2 - 50px);
 	position: absolute;
-	z-index: 11;
+	z-index: 5;
 	overflow: hidden;
 }
 
@@ -266,10 +266,6 @@ body.dark-mode #tt-page-status .tt-features-list {
 	margin-bottom: 5px;
 	text-align: center;
 	font-style: italic;
-}
-
-.tt-features-list div[scope]:not(div[feature-name]) :hover {
-	background-color: yellow;
 }
 
 #tt-page-status .tt-features-list .tt-feature {

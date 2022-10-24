@@ -6,6 +6,8 @@
 	const params = getSearchParameters();
 	if (params.get("step") !== "your") return;
 
+	let originalText;
+
 	const feature = featureManager.registerFeature(
 		"Faction Banker",
 		"faction",
@@ -23,7 +25,7 @@
 		CUSTOM_LISTENERS[EVENT_CHANNELS.FACTION_GIVE_TO_USER].push(() => {
 			if (!feature.enabled()) return;
 
-			showHelper();
+			showBalance();
 		});
 	}
 
@@ -44,9 +46,14 @@
 		const input = document.find("#money-user");
 		if (!input) return;
 
+		const label = document.find(".select-wrap .placeholder");
+		if (typeof originalText === "undefined" && !label.textContent.includes("balance of")) {
+			originalText = label.textContent;
+		}
+
 		const user = input.value.match(/(.*) \[(\d*)]/i);
 		if (!user) {
-			document.find("label[for='money-user']").textContent = "Select player: ";
+			label.textContent = originalText;
 			return;
 		}
 
@@ -54,7 +61,7 @@
 		const balance =
 			parseInt(document.find(`.depositor .user.name[href='/profiles.php?XID=${user[2]}']`).parentElement.find(".amount .money").dataset.value) || 0;
 
-		document.find("label[for='money-user']").textContent = `${name} has a balance of $${formatNumber(balance, { decimals: 0 })}`;
+		label.textContent = `${name} has a balance of $${formatNumber(balance, { decimals: 0 })}`;
 	}
 
 	function removeHelper() {
@@ -63,5 +70,8 @@
 
 		["change", "paste", "keyup", "select", "focus", "input"].forEach((event) => input.removeEventListener(event, showBalance));
 		document.find("#money-user-cont").removeEventListener("click", showBalance);
+		if (typeof originalText === "string") {
+			document.find(".select-wrap .placeholder").textContent = originalText;
+		}
 	}
 })();

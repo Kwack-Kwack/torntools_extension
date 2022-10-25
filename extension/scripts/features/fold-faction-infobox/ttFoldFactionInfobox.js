@@ -39,7 +39,7 @@
 		foldInfobox();
 	}
 
-	const registered = [];
+	// const registered = [];
 
 	async function foldInfobox() {
 		let title, description, key;
@@ -71,10 +71,15 @@
 
 		fold(!!filters.containers[key]);
 
-		if (!registered.includes(key)) {
-			registered.push(key);
+		if (!title.classList.contains(`tt-${key}`)) {
+			title.classList.add(`tt-${key}`);
 			title.addEventListener("click", () => fold());
 		}
+
+		// if (!registered.includes(key)) {
+		// 	registered.push(key);
+		// 	title.addEventListener("click", () => fold());
+		// }
 
 		function fold(state) {
 			if (!feature.enabled()) return;

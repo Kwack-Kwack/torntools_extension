@@ -119,7 +119,7 @@
 		const levelStart = parseInt(levels.start);
 		const levelEnd = parseInt(levels.end);
 		if (pageChange) {
-			localFilters["Faction"].updateOptions([...defaultFactionsItems, ...getFactions()], content);
+			localFilters["Faction"].updateOptions([...defaultFactionsItems,  { value: "CUSTOM", description: "Custom" }, ...getFactions()], content);
 		}
 
 		// Update level and time slider counters
@@ -161,7 +161,7 @@
 				}
 			});
 		} else {
-			if (document.find(".tt-custom-faction-id")) document.find(".tt-custom-faction-id").remove();
+			if (faction != "CUSTOM" && document.find(".tt-custom-faction-id")) document.find(".tt-custom-faction-id").remove();
 			updateFilters();
 		}
 		function updateFilters() {

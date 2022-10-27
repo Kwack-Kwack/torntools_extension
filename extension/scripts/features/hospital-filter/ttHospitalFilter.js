@@ -262,18 +262,6 @@
 						.filter((tag) => !!tag)
 				: rows.map((row) => row.textContent.trim()).filter((tag) => !!tag)
 		);
-		/*
-		const _factions = new Set(
-			document.findAll(".users-list > li .user.faction img").length
-				? rows
-						.map((row) => ({ img: row.find("img"), id: row.href.replace(/[^\d]/g, "") }))
-						.filter((obj) => !!obj.img)
-						.map((obj) => ({ tag: obj.img.getAttribute("title").trim(), id: obj.id }))
-						.filter((obj) => !!obj.tag)
-						.map((obj) => ({ tag: obj.tag, id: obj.id }))
-				: rows.map((row) => ({ tag: row.textContent.trim(), id: row.href.replace(/[^\d]/g, "") })).filter((obj) => !!obj.tag)
-		);
-		*/
 
 		const factions = [];
 		for (const faction of _factions) {

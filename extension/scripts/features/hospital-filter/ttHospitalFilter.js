@@ -64,7 +64,7 @@
 
 		const factionFilter = createFilterSection({
 			title: "Faction",
-			select: [...defaultFactionsItems, ...getFactions()],
+			select: [...defaultFactionsItems, { value: "CUSTOM", description: "Custom" }, ...getFactions()],
 			defaults: "",
 			callback: filtering,
 		});
@@ -119,7 +119,7 @@
 		const levelStart = parseInt(levels.start);
 		const levelEnd = parseInt(levels.end);
 		if (pageChange) {
-			localFilters["Faction"].updateOptions([...defaultFactionsItems, ...getFactions()], content);
+			localFilters["Faction"].updateOptions([...defaultFactionsItems,  { value: "CUSTOM", description: "Custom" }, ...getFactions()], content);
 		}
 
 		// Update level and time slider counters
@@ -141,63 +141,93 @@
 			},
 		});
 
-		// Actual Filtering
-		for (const li of document.findAll(".users-list > li")) {
-			showRow(li);
+		if (faction == "CUSTOM" && !document.find(".tt-custom-faction-id")) {
+			let input = document.find("#hospitalFilter .faction__section-class").appendChild(
+				document.newElement({
+					type: "div",
+					class: "tt-custom-faction-id",
+					children: [
+						document.newElement({
+							type: "input",
+							class: "tt-custom-faction-id-input",
+							attributes: { placeholder: "Faction Id", type: "text" },
+						}),
+					],
+				})
+			);
+			input.addEventListener("keydown", (e) => {
+				if (e.key == "Enter") {
+					updateFilters();
+				}
+			});
+		} else {
+			if (faction != "CUSTOM" && document.find(".tt-custom-faction-id")) document.find(".tt-custom-faction-id").remove();
+			updateFilters();
+		}
+		function updateFilters() {
+			for (const li of document.findAll(".users-list > li")) {
+				showRow(li);
 
-			// Activity
-			if (
-				activity.length &&
-				!activity.some((x) => x.trim() === li.find("#iconTray li").getAttribute("title").match(FILTER_REGEXES.activity)[0].toLowerCase().trim())
-			) {
-				hideRow(li);
-				continue;
-			}
-
-			// Revives On
-			if (revivesOn && li.find(".revive").classList.contains("reviveNotAvailable")) {
-				hideRow(li);
-				continue;
-			}
-
-			// Faction
-
-			const rowFaction = li.find(".user.faction");
-			const hasFaction = !!rowFaction.href;
-			const factionName = rowFaction.hasAttribute("rel")
-				? rowFaction.find(":scope > img").getAttribute("title").trim() || "N/A"
-				: rowFaction.textContent.trim();
-
-			if (faction && faction !== "No faction" && faction !== "Unknown faction") {
-				if (!hasFaction || factionName === "N/A" || factionName !== faction) {
+				// Activity
+				if (
+					activity.length &&
+					!activity.some((x) => x.trim() === li.find("#iconTray li").getAttribute("title").match(FILTER_REGEXES.activity)[0].toLowerCase().trim())
+				) {
 					hideRow(li);
 					continue;
 				}
-			} else if (faction === "No faction") {
-				if (hasFaction) {
-					hideRow(li);
-					continue;
-				}
-			} else if (faction === "Unknown faction") {
-				if (!hasFaction || factionName !== "N/A") {
-					// Not "Unknown faction"
-					hideRow(li);
-					continue;
-				}
-			}
 
-			// Time
-			const timeLeftHrs = parseInt(li.find(".info-wrap .time").lastChild.textContent?.match(/(\d*)h/)?.[1]) || 0;
-			if ((timeStart && timeLeftHrs < timeStart) || (timeEnd !== 100 && timeLeftHrs >= timeEnd)) {
-				hideRow(li);
-				continue;
-			}
-			// Level
-			const level = li.find(".info-wrap .level").textContent.getNumber();
-			if ((levelStart && level < levelStart) || (levelEnd !== 100 && level > levelEnd)) {
-				hideRow(li);
-				// noinspection UnnecessaryContinueJS
-				continue;
+				// Revives On
+				if (revivesOn && li.find(".revive").classList.contains("reviveNotAvailable")) {
+					hideRow(li);
+					continue;
+				}
+
+				// Faction
+
+				const rowFaction = li.find(".user.faction");
+				const hasFaction = !!rowFaction.href;
+				const factionName = rowFaction.hasAttribute("rel")
+					? rowFaction.find(":scope > img").getAttribute("title").trim() || "N/A"
+					: rowFaction.textContent.trim();
+				const factionId = rowFaction.href.replace(/[^\d]/g, "");
+				if (faction == "CUSTOM") {
+					if (!getCustomId()) continue;
+					if (factionId != getCustomId()) {
+						hideRow(li);
+						continue;
+					}
+				} else if (faction && faction !== "No faction" && faction !== "Unknown faction") {
+					if (!hasFaction || factionName === "N/A" || factionName !== faction) {
+						hideRow(li);
+						continue;
+					}
+				} else if (faction === "No faction") {
+					if (hasFaction) {
+						hideRow(li);
+						continue;
+					}
+				} else if (faction === "Unknown faction") {
+					if (!hasFaction || factionName !== "N/A") {
+						// Not "Unknown faction"
+						hideRow(li);
+						continue;
+					}
+				}
+
+				// Time
+				const timeLeftHrs = parseInt(li.find(".info-wrap .time").lastChild.textContent?.match(/(\d*)h/)?.[1]) || 0;
+				if ((timeStart && timeLeftHrs < timeStart) || (timeEnd !== 100 && timeLeftHrs >= timeEnd)) {
+					hideRow(li);
+					continue;
+				}
+				// Level
+				const level = li.find(".info-wrap .level").textContent.getNumber();
+				if ((levelStart && level < levelStart) || (levelEnd !== 100 && level > levelEnd)) {
+					hideRow(li);
+					// noinspection UnnecessaryContinueJS
+					continue;
+				}
 			}
 		}
 
@@ -214,6 +244,11 @@
 			document.findAll(".users-list > li").length,
 			content
 		);
+	}
+
+	function getCustomId() {
+		if (!document.find(".tt-custom-faction-id-input")) return;
+		return document.find(".tt-custom-faction-id-input").value;
 	}
 
 	function getFactions() {

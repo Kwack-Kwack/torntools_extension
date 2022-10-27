@@ -110,7 +110,6 @@
 				"scripts/features/hide-tutorials/ttHideTutorials.entry.js",
 				"scripts/features/hide-chat/ttHideChat.entry.js"
 			],
-			"exclude_matches": ["https://www.torn.com/logout.php*"],
 			"run_at": "document_start"
 		},
 		{

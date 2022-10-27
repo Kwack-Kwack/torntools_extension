@@ -64,7 +64,7 @@
 
 		const factionFilter = createFilterSection({
 			title: "Faction",
-			select: [...defaultFactionsItems, ...getFactions()],
+			select: [...defaultFactionsItems, { value: "CUSTOM", description: "Custom" }, ...getFactions()],
 			defaults: "",
 			callback: filtering,
 		});
@@ -140,6 +140,27 @@
 				},
 			},
 		});
+		
+		if(faction == "CUSTOM" && !document.find(".tt-custom-faction-id")) {
+			document.find("#hospitalFilter .faction__section-class").appendChild(
+				document.newElement({
+					type: "div",
+					class: "tt-custom-faction-id",
+					children: [
+						document.newElement({
+							type: "input",
+							class: "tt-custom-faction-id-input",
+							attributes: { placeholder: "Faction Id", type: "text" },
+							events: {
+								input: (event) => {
+									updateCustomId(event.target.value)
+								}
+							}
+						})
+					]
+				})
+			)
+		}
 
 		// Actual Filtering
 		for (const li of document.findAll(".users-list > li")) {
@@ -167,8 +188,14 @@
 			const factionName = rowFaction.hasAttribute("rel")
 				? rowFaction.find(":scope > img").getAttribute("title").trim() || "N/A"
 				: rowFaction.textContent.trim();
-
-			if (faction && faction !== "No faction" && faction !== "Unknown faction") {
+			const factionId = rowFaction.href.replace(/[^\d]/g, "");
+			if (faction == "CUSTOM") {
+				if (!customId) continue;
+				if (factionId != customId) {
+					hideRow(li);
+					continue;
+				}
+			} else if (faction && faction !== "No faction" && faction !== "Unknown faction") {
 				if (!hasFaction || factionName === "N/A" || factionName !== faction) {
 					hideRow(li);
 					continue;
@@ -216,6 +243,10 @@
 		);
 	}
 
+	function updateCustomId(id) {
+		let customId = id;
+	}
+
 	function getFactions() {
 		const rows = [...document.findAll(".users-list > li .user.faction")];
 		const _factions = new Set(
@@ -227,6 +258,18 @@
 						.filter((tag) => !!tag)
 				: rows.map((row) => row.textContent.trim()).filter((tag) => !!tag)
 		);
+		/*
+		const _factions = new Set(
+			document.findAll(".users-list > li .user.faction img").length
+				? rows
+						.map((row) => ({ img: row.find("img"), id: row.href.replace(/[^\d]/g, "") }))
+						.filter((obj) => !!obj.img)
+						.map((obj) => ({ tag: obj.img.getAttribute("title").trim(), id: obj.id }))
+						.filter((obj) => !!obj.tag)
+						.map((obj) => ({ tag: obj.tag, id: obj.id }))
+				: rows.map((row) => ({ tag: row.textContent.trim(), id: row.href.replace(/[^\d]/g, "") })).filter((obj) => !!obj.tag)
+		);
+		*/
 
 		const factions = [];
 		for (const faction of _factions) {

@@ -111,7 +111,6 @@
 				"scripts/features/hide-chat/ttHideChat.entry.js",
 				"scripts/features/copy-id/ttCopyID.js"
 			],
-			"exclude_matches": ["https://www.torn.com/logout.php*"],
 			"run_at": "document_start"
 		},
 		{

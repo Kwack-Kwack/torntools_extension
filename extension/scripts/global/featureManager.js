@@ -78,7 +78,7 @@ class FeatureManager {
 			options,
 		};
 
-		this.logInfo("Registered new feature.", newFeature).then(() => {});
+		this.logInfo(`Registered new feature ${newFeature.name}`, newFeature).then(() => {});
 		this.features.push(newFeature);
 
 		this.startFeature(newFeature).catch((error) => this.logError(`Failed to start "${name}".`, error));
@@ -106,7 +106,7 @@ class FeatureManager {
 			this.executeFunction(execute).catch((error) => this.logError(`Failed to (adjust)start "${name}".`, error));
 		}
 
-		this.logInfo("Adjusted feature.", feature).then(() => {});
+		this.logInfo(`Adjusted feature ${feature.name}`, feature).then(() => {});
 		return feature;
 	}
 
@@ -118,7 +118,7 @@ class FeatureManager {
 		await loadDatabase();
 		try {
 			if (getValue(feature.enabled)) {
-				this.logInfo("Starting feature.", feature).then(() => {});
+				this.logInfo(`Starting feature ${feature.name}`, feature).then(() => {});
 				if ("requirements" in feature) {
 					const requirements = await getValueAsync(feature.requirements);
 
@@ -149,7 +149,7 @@ class FeatureManager {
 				}
 			} else {
 				if (feature.hasLoaded) {
-					this.logInfo("Disabling feature.", feature).then(() => {});
+					this.logInfo(`Disabling feature ${feature.name}`, feature).then(() => {});
 					await this.executeFunction(feature.cleanup);
 					if (feature.options.triggerCallback) {
 						triggerCustomListener(EVENT_CHANNELS.FEATURE_DISABLED, { name: feature.name });

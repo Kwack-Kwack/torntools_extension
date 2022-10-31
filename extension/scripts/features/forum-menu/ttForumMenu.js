@@ -41,6 +41,8 @@
 				continue;
 			}
 
+			if (thread.firstElementChild.tagName.toLowerCase() == "p") return;
+
 			const userId = getUsername(thread).id;
 
 			const shouldHideThreads = settings.pages.forums.hideThreads[userId];

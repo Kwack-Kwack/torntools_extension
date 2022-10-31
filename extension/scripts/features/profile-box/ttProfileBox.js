@@ -615,6 +615,7 @@
 
 						if (code === 2 && message === "Player not found") errors.push({ service: "YATA", message: "You don't have an account." });
 						else if (code === 502) errors.push({ service: "YATA", message: "YATA appears to be down." });
+						else if (code === 429) errors.push({ service: "YATA", message: "YATA servers are being overloaded and have imposed a limit on requests."})
 						else errors.push({ service: "YATA", message: `Unknown (${code}) - ${message}` });
 					} else if (error.code === 502) {
 						errors.push({ service: "YATA", message: "YATA appears to be down." });

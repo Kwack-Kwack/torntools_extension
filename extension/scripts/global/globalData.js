@@ -734,6 +734,7 @@ const DEFAULT_STORAGE = {
 			levelEnd: new DefaultSetting({ type: "number", defaultValue: 100 }),
 			special: {
 				fedded: new DefaultSetting({ type: "string", defaultValue: "both" }),
+				fallen: new DefaultSetting({ type: "string", defaultValue: "both" }),
 				traveling: new DefaultSetting({ type: "string", defaultValue: "both" }),
 				newPlayer: new DefaultSetting({ type: "string", defaultValue: "both" }),
 				onWall: new DefaultSetting({ type: "string", defaultValue: "both" }),
@@ -768,6 +769,7 @@ const DEFAULT_STORAGE = {
 			position: new DefaultSetting({ type: "string", defaultValue: "" }),
 			special: {
 				fedded: new DefaultSetting({ type: "string", defaultValue: "both" }),
+				fallen: new DefaultSetting({ type: "string", defaultValue: "both" }),
 				newPlayer: new DefaultSetting({ type: "string", defaultValue: "both" }),
 				inCompany: new DefaultSetting({ type: "string", defaultValue: "both" }),
 				isDonator: new DefaultSetting({ type: "string", defaultValue: "both" }),

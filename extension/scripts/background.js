@@ -152,7 +152,12 @@ async function convertDatabase() {
 			if (storage?.stock_alerts)
 				newStorage.settings.notifications.types.stocks = Object.entries(storage.stock_alerts)
 					.filter(([id]) => !isNaN(id) && !!parseInt(id))
-					.map(([id, alert]) => ({ [id]: { priceFalls: parseInt(alert.fall) || "", priceReaches: parseInt(alert.reach) || "" } }))
+					.map(([id, alert]) => ({
+						[id]: {
+							priceFalls: parseInt(alert.fall) || "",
+							priceReaches: parseInt(alert.reach) || "",
+						},
+					}))
 					.reduce((prev, current) => ({ ...prev, ...current }), {});
 
 			// Reset
@@ -462,12 +467,12 @@ async function updateUserdata() {
 
 						let respect = attack.respect_gain;
 						if (respect !== 0) {
-							let hasBaseRespect = attack.modifiers;
+							let hasAccurateModifiers = attack.modifiers;
 
-							if (hasBaseRespect) {
+							if (hasAccurateModifiers) {
 								if (respect === attack.modifiers.chain_bonus) {
 									respect = 1;
-									hasBaseRespect = false;
+									hasAccurateModifiers = false;
 								} else {
 									if (attack.result === "Mugged") respect /= 0.75;
 
@@ -480,9 +485,10 @@ async function updateUserdata() {
 										attack.modifiers.chain_bonus /
 										(attack.modifiers.warlord_bonus || 1);
 								}
+								attackHistory.history[enemyId].latestFairFightModifier = attack.modifiers.fair_fight;
 							}
 
-							attackHistory.history[enemyId][hasBaseRespect ? "respect_base" : "respect"].push(respect);
+							attackHistory.history[enemyId][hasAccurateModifiers ? "respect_base" : "respect"].push(respect);
 						}
 
 						switch (attack.result) {
@@ -506,7 +512,13 @@ async function updateUserdata() {
 				}
 			}
 
-			await ttStorage.change({ attackHistory: { lastAttack, fetchData: false, history: { ...attackHistory.history } } });
+			await ttStorage.change({
+				attackHistory: {
+					lastAttack,
+					fetchData: false,
+					history: { ...attackHistory.history },
+				},
+			});
 		}
 	}
 
@@ -589,11 +601,21 @@ async function updateUserdata() {
 				});
 			} else if (previous === "Jail") {
 				await notifyUser("TornTools - Status", "You are out of the jail.", LINKS.home);
-				storeNotification({ title: "TornTools - Status", message: "You are out of the jail.", url: LINKS.home, date: Date.now() });
+				storeNotification({
+					title: "TornTools - Status",
+					message: "You are out of the jail.",
+					url: LINKS.home,
+					date: Date.now(),
+				});
 			}
 		} else {
 			await notifyUser("TornTools - Status", userdata.status.description, LINKS.home);
-			storeNotification({ title: "TornTools - Status", message: userdata.status.description, url: LINKS.home, date: Date.now() });
+			storeNotification({
+				title: "TornTools - Status",
+				message: userdata.status.description,
+				url: LINKS.home,
+				date: Date.now(),
+			});
 		}
 		await ttStorage.set({ notificationHistory });
 	}
@@ -606,7 +628,12 @@ async function updateUserdata() {
 			if (userdata.cooldowns[type] || !oldUserdata.cooldowns[type]) continue;
 
 			await notifyUser("TornTools - Cooldown", `Your ${type} cooldown has ended.`, LINKS.items);
-			storeNotification({ title: "TornTools - Cooldown", message: `Your ${type} cooldown has ended.`, url: LINKS.items, date: Date.now() });
+			storeNotification({
+				title: "TornTools - Cooldown",
+				message: `Your ${type} cooldown has ended.`,
+				url: LINKS.items,
+				date: Date.now(),
+			});
 		}
 		await ttStorage.set({ notificationHistory });
 	}
@@ -801,8 +828,20 @@ async function updateUserdata() {
 
 		const COOLDOWNS = [
 			{ name: "drug", title: "Drugs", setting: "cooldownDrug", memory: "drugs", enabled: "cooldownDrugEnabled" },
-			{ name: "booster", title: "Boosters", setting: "cooldownBooster", memory: "boosters", enabled: "cooldownBoosterEnabled" },
-			{ name: "medical", title: "Medical", setting: "cooldownMedical", memory: "medical", enabled: "cooldownMedicalEnabled" },
+			{
+				name: "booster",
+				title: "Boosters",
+				setting: "cooldownBooster",
+				memory: "boosters",
+				enabled: "cooldownBoosterEnabled",
+			},
+			{
+				name: "medical",
+				title: "Medical",
+				setting: "cooldownMedical",
+				memory: "medical",
+				enabled: "cooldownMedicalEnabled",
+			},
 		];
 
 		for (const cooldown of COOLDOWNS) {
@@ -1051,7 +1090,10 @@ async function updateStakeouts() {
 }
 
 async function updateTorndata() {
-	torndata = await fetchData("torn", { section: "torn", selections: ["education", "honors", "items", "medals", "pawnshop", "properties", "stats"] });
+	torndata = await fetchData("torn", {
+		section: "torn",
+		selections: ["education", "honors", "items", "medals", "pawnshop", "properties", "stats"],
+	});
 	if (!torndata || !Object.keys(torndata).length) throw new Error("Aborted updating due to an unexpected response.");
 	torndata.date = Date.now();
 

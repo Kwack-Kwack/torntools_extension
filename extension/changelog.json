@@ -4,11 +4,14 @@
 		"title": "Beta",
 		"date": false,
 		"logs": {
-			"features": [],
+			"features": [{ "message": "Show fair fight on the attack page.", "contributor": "DeKleineKobini" }],
 			"fixes": [
 				{ "message": "Fix gym progress not taking the music store special into account anymore.", "contributor": "DeKleineKobini" },
 				{ "message": "Fix banking helper no longer working.", "contributor": "DeKleineKobini" },
-				{ "message": "Fix faction infobox folding after switching tabs.", "contributor": "Kwack" }
+				{ "message": "Fix faction infobox folding after switching tabs.", "contributor": "Kwack" },
+				{ "message": "Fix total item value in the faction armory on mobile.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix cooldowns not showing on first load when business flight is default.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix stats estimates on the attack page not working on tablet and mobile.", "contributor": "DeKleineKobini" }
 			],
 			"changes": [
 				{ "message": "Improve feature manager overlaps.", "contributor": "Kwack" },
@@ -18,7 +21,9 @@
 				{
 					"message": "Remove Loud and Clear mission hint as it's outdated and the task itself should be clear enough.",
 					"contributor": "DeKleineKobini"
-				}
+				},
+				{ "message": "Add fair fight in the attack history.", "contributor": "DeKleineKobini" },
+				{ "message": "Filter on abroad status for ranked wars.", "contributor": "DeKleineKobini" }
 			],
 			"removed": []
 		}

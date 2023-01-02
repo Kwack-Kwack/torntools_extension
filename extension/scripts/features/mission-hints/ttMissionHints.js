@@ -25,6 +25,7 @@
 	}
 
 	async function showHints() {
+		// Source: https://www.torn.com/forums.php#/p=threads&f=19&t=16130409&b=0&a=0&start=0&to=19915206
 		const MISSION_HINTS = {
 			a_good_day_to_get_hard: {
 				task: "Achieve a killstreak of 3 - 10.",
@@ -146,6 +147,7 @@
 			},
 			graffiti: {
 				task: "Hit (P) with pepper spray.",
+				hint: "Even if it's ineffective, it still counts.",
 			},
 			guardian: {
 				task: "Defeat (P).",
@@ -278,6 +280,7 @@
 			},
 			sellout_slayer: {
 				task: "Buy a gun, use the gun on any 2 - 6 players, then sell it again.",
+				hint: "Not every non-melee weapon is a gun. As example, a blowgun might not work.",
 			},
 			sending_a_message: {
 				task: "Defeat (P).",

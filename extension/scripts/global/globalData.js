@@ -508,6 +508,9 @@ const DEFAULT_STORAGE = {
 			hospital: {
 				filter: new DefaultSetting({ type: "boolean", defaultValue: true }),
 			},
+			auction: {
+				filter: new DefaultSetting({ type: "boolean", defaultValue: true }),
+			},
 			api: {
 				autoFillKey: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				autoDemo: new DefaultSetting({ type: "boolean", defaultValue: true }),
@@ -565,6 +568,7 @@ const DEFAULT_STORAGE = {
 				recommendedNnb: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				ocNnb: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				ocTimes: new DefaultSetting({ type: "boolean", defaultValue: true }),
+				ocLastAction: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				banker: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				showFullInfobox: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				foldableInfobox: new DefaultSetting({ type: "boolean", defaultValue: true }),
@@ -797,6 +801,28 @@ const DEFAULT_STORAGE = {
 			hideLoss: new DefaultSetting({ type: "boolean", defaultValue: false }),
 			hideUnder100: new DefaultSetting({ type: "boolean", defaultValue: false }),
 		},
+		auction: {
+			weapons: {
+				name: new DefaultSetting({ type: "string", defaultValue: "" }),
+				category: new DefaultSetting({ type: "string", defaultValue: "" }),
+				rarity: new DefaultSetting({ type: "string", defaultValue: "" }),
+				weaponType: new DefaultSetting({ type: "string", defaultValue: "" }),
+				damage: new DefaultSetting({ type: "string", defaultValue: "" }),
+				accuracy: new DefaultSetting({ type: "string", defaultValue: "" }),
+				weaponBonus: new DefaultSetting({ type: "array", defaultValue: [] }),
+			},
+			armor: {
+				name: new DefaultSetting({ type: "string", defaultValue: "" }),
+				rarity: new DefaultSetting({ type: "string", defaultValue: "" }),
+				defence: new DefaultSetting({ type: "string", defaultValue: "" }),
+				set: new DefaultSetting({ type: "string", defaultValue: "" }),
+			},
+			items: {
+				name: new DefaultSetting({ type: "string", defaultValue: "" }),
+				category: new DefaultSetting({ type: "string", defaultValue: "" }),
+				rarity: new DefaultSetting({ type: "string", defaultValue: "" }),
+			},
+		},
 	},
 	userdata: new DefaultSetting({ type: "object", defaultValue: {} }),
 	torndata: new DefaultSetting({ type: "object", defaultValue: {} }),
@@ -855,6 +881,7 @@ const CUSTOM_LINKS_PRESET = {
 	"Points Market": { link: "https://www.torn.com/pmarket.php" },
 	Raceway: { link: "https://www.torn.com/loader.php?sid=racing" },
 	"Travel Agency": { link: "https://www.torn.com/travelagency.php" },
+	"Christmas Town : Maps": { link: "https://www.torn.com/christmas_town.php#/mymaps" },
 };
 
 const HIGHLIGHT_PLACEHOLDERS = [{ name: "$player", value: () => userdata.name || "", description: "Your player name." }];

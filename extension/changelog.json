@@ -1,8 +1,29 @@
 [
 	{
-		"version": { "major": 6, "minor": 10, "build": 0 },
+		"version": { "major": 6, "minor": 9, "build": 4 },
 		"title": "Beta",
 		"date": false,
+		"logs": {
+			"features": [
+				{ "message": "Show last action on the OC page.", "contributor": "DeKleineKobini" },
+				{ "message": "Filter in the auction house.", "contributor": "DeKleineKobini" }
+			],
+			"fixes": [
+				{ "message": "Fix company stock button updating.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix city items when no API key is provided.", "contributor": "DeKleineKobini" }
+			],
+			"changes": [
+				{ "message": "Add Sellout Slayer mission hint.", "contributor": "DeKleineKobini" },
+				{ "message": "Update CSV export to reflect Torn changes (add 'best' and remove 'bonus').", "contributor": "DeKleineKobini" },
+				{ "message": "Change torndata validity check to better avoid corrupt data.", "contributor": "DeKleineKobini" },
+				{ "message": "Show item name when using quick items when no API key is provided.", "contributor": "DeKleineKobini" }
+			],
+			"removed": []
+		}
+	},
+	{
+		"version": { "major": 6, "minor": 9, "build": 3 },
+		"date": "2022/12/15",
 		"logs": {
 			"features": [{ "message": "Show fair fight on the attack page.", "contributor": "DeKleineKobini" }],
 			"fixes": [
@@ -11,7 +32,12 @@
 				{ "message": "Fix faction infobox folding after switching tabs.", "contributor": "Kwack" },
 				{ "message": "Fix total item value in the faction armory on mobile.", "contributor": "DeKleineKobini" },
 				{ "message": "Fix cooldowns not showing on first load when business flight is default.", "contributor": "DeKleineKobini" },
-				{ "message": "Fix stats estimates on the attack page not working on tablet and mobile.", "contributor": "DeKleineKobini" }
+				{ "message": "Fix stats estimates on the attack page not working on tablet and mobile.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix travel table count to be correct for business travel.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix hide chat position.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix trade value not working when there is a peace treaty included.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix stock alert reaches not working correctly.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix company perk not being correctly used for the travel table amount.", "contributor": "DeKleineKobini" }
 			],
 			"changes": [
 				{ "message": "Improve feature manager overlaps.", "contributor": "Kwack" },
@@ -23,9 +49,13 @@
 					"contributor": "DeKleineKobini"
 				},
 				{ "message": "Add fair fight in the attack history.", "contributor": "DeKleineKobini" },
-				{ "message": "Filter on abroad status for ranked wars.", "contributor": "DeKleineKobini" }
-			],
-			"removed": []
+				{ "message": "Filter on abroad status for ranked wars.", "contributor": "DeKleineKobini" },
+				{ "message": "Increase the profile box spy cache time.", "contributor": "DeKleineKobini" },
+				{ "message": "Include a button to manually refresh the profile box spy.", "contributor": "DeKleineKobini" },
+				{ "message": "Change chat hiding to not hide the notebook, but hide the people box.", "contributor": "DeKleineKobini" },
+				{ "message": "Include PTS ROI in the popup.", "contributor": "DeKleineKobini" },
+				{ "message": "Add hint to graffiti mission.", "contributor": "DeKleineKobini" }
+			]
 		}
 	},
 	{

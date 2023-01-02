@@ -1090,14 +1090,19 @@ async function updateStakeouts() {
 }
 
 async function updateTorndata() {
-	torndata = await fetchData("torn", {
+	const data = await fetchData("torn", {
 		section: "torn",
 		selections: ["education", "honors", "items", "medals", "pawnshop", "properties", "stats"],
 	});
-	if (!torndata || !Object.keys(torndata).length) throw new Error("Aborted updating due to an unexpected response.");
-	torndata.date = Date.now();
+	if (!isValidTorndata(data)) throw new Error("Aborted updating due to an unexpected response.");
+	data.date = Date.now();
 
-	await ttStorage.set({ torndata });
+	torndata = data;
+	await ttStorage.set({ torndata: data });
+
+	function isValidTorndata(data) {
+		return !!data && Object.keys(data).length > 0 && data.items && Object.keys(data.items).length > 0;
+	}
 }
 
 async function updateStocks() {
@@ -1119,7 +1124,7 @@ async function updateStocks() {
 
 				await notifyUser("TornTools - Stock Alerts", message, LINKS.stocks);
 				storeNotification({ title: "TornTools -  Stock Alerts", message, url: LINKS.stocks, date: Date.now() });
-			} else if (alerts.priceReaches && oldStocks[id].current_price < alerts.priceFalls && stocks[id].current_price >= alerts.priceReaches) {
+			} else if (alerts.priceReaches && oldStocks[id].current_price < alerts.priceReaches && stocks[id].current_price >= alerts.priceReaches) {
 				const message = `(${stocks[id].acronym}) ${stocks[id].name} has reached ${formatNumber(stocks[id].current_price, {
 					currency: true,
 				})} (alert: ${formatNumber(alerts.priceReaches, { currency: true })})!`;

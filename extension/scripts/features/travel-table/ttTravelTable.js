@@ -558,9 +558,8 @@
 				.filter((result) => !!result)
 				.map((result) => parseInt(result[1]))
 				.totalSum();
-			// CHECK - Improve job perk checking.
 			count += userdata.job_perks
-				.filter((perk) => perk.includes("travel capacity") || perk.includes("travel items"))
+				.filter((perk) => perk.includes("travel") && (perk.includes("item") || perk.includes("capacity")))
 				.map((perk) => parseInt(perk.replace("+ ", "").split(" ")[0]))
 				.totalSum();
 			count += userdata.faction_perks
@@ -609,6 +608,10 @@
 			switch (userdata.travel.method.toLowerCase()) {
 				case "airstrip":
 					return "private";
+				case "private": // Needs to be validated.
+					return "private";
+				case "business":
+					return "business";
 				default:
 					console.log("TT - Detected unknown travel type.", userdata.travel.method);
 					return "standard";

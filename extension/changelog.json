@@ -6,11 +6,19 @@
 		"logs": {
 			"features": [
 				{ "message": "Show last action on the OC page.", "contributor": "DeKleineKobini" },
-				{ "message": "Filter in the auction house.", "contributor": "DeKleineKobini" }
+				{ "message": "Filter in the auction house.", "contributor": "DeKleineKobini" },
+				{ "message": "Ignore single forum posts using the forum menu.", "contributor": "DeKleineKobini" },
+				{ "message": "Add Prometheus as alternative travel table source.", "contributor": "DeKleineKobini" },
+				{ "message": "Quick items in the faction armory.", "contributor": "DeKleineKobini" }
 			],
 			"fixes": [
 				{ "message": "Fix company stock button updating.", "contributor": "DeKleineKobini" },
-				{ "message": "Fix city items when no API key is provided.", "contributor": "DeKleineKobini" }
+				{ "message": "Fix city items when no API key is provided.", "contributor": "DeKleineKobini" },
+				{
+					"message": "Fix item value for the first item of each category while adding items in your bazaar on mobile.",
+					"contributor": "DeKleineKobini"
+				},
+				{ "message": "Fix item value for the first item of each category in your inventory on mobile.", "contributor": "DeKleineKobini" }
 			],
 			"changes": [
 				{ "message": "Add Sellout Slayer mission hint.", "contributor": "DeKleineKobini" },

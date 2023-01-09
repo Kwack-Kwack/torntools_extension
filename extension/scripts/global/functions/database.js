@@ -1,6 +1,6 @@
 "use strict";
 
-let settings, filters, version, api, userdata, torndata, stakeouts, attackHistory, notes, factiondata, quick, localdata, npcs, notificationHistory, stockdata;
+let settings, filters, version, commit, api, userdata, torndata, stakeouts, attackHistory, notes, factiondata, quick, localdata, npcs, notificationHistory, stockdata;
 let databaseLoaded = false;
 let databaseLoading = false;
 const storageListeners = {
@@ -31,6 +31,7 @@ async function loadDatabase() {
 	settings = database.settings;
 	filters = database.filters;
 	version = database.version;
+	commit = database.commit
 	api = database.api;
 	userdata = database.userdata;
 	torndata = database.torndata;

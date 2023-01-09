@@ -194,16 +194,23 @@ async function convertDatabase() {
 }
 
 async function checkUpdate() {
-	const oldVersion = version.oldVersion;
-	const newVersion = chrome.runtime.getManifest().version;
+	// const oldVersion = version.oldVersion;
+	// const newVersion = chrome.runtime.getManifest().version;
 
-	const change = { version: { oldVersion: newVersion } };
-	if (oldVersion !== newVersion) {
-		console.log("New version detected!", newVersion);
-		change.version.showNotice = true;
+	// const change = { version: { oldVersion: newVersion } };
+	// if (oldVersion !== newVersion) {
+	// 	console.log("New version detected!", newVersion);
+	// 	change.version.showNotice = true;
+	// }
+
+	// await ttStorage.change(change);
+	const currentSHA = commit.sha
+	const githubSHA = await fetch("https://api.github.com/repos/Mephiles/torntools_extension/commits").then(r => r.json()).then(d => d[0]["sha"])
+	if(currentSHA !== githubSHA) {
+		console.log(currentSHA, githubSHA)
+		notifyUser("Update available on Github!", "Click to jump to the main-tt branch!", "https://github.com/Kwack-Kwack/torntools_extension/tree/main-tt")
+		await ttStorage.set({commit: {sha: githubSHA}})
 	}
-
-	await ttStorage.change(change);
 }
 
 function registerUpdaters() {

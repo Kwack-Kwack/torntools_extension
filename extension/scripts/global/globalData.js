@@ -254,6 +254,9 @@ const DEFAULT_STORAGE = {
 		oldVersion: new DefaultSetting({ type: "string" }),
 		showNotice: new DefaultSetting({ type: "boolean", defaultValue: true }),
 	},
+	commit: {
+		sha: new DefaultSetting({ type: "string" })
+	},
 	api: {
 		torn: {
 			key: new DefaultSetting({ type: "string" }),

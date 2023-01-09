@@ -523,6 +523,7 @@ const DEFAULT_STORAGE = {
 				hideThreads: new DefaultSetting({ type: "object", defaultValue: {} }),
 				highlightPosts: new DefaultSetting({ type: "object", defaultValue: {} }),
 				highlightThreads: new DefaultSetting({ type: "object", defaultValue: {} }),
+				ignoredThreads: new DefaultSetting({ type: "object", defaultValue: {} }),
 			},
 			bazaar: {
 				itemsCost: new DefaultSetting({ type: "boolean", defaultValue: true }),
@@ -579,6 +580,7 @@ const DEFAULT_STORAGE = {
 				upgradeRequiredRespect: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				memberInfo: new DefaultSetting({ type: "boolean", defaultValue: false }),
 				rankedWarFilter: new DefaultSetting({ type: "boolean", defaultValue: true }),
+				quickItems: new DefaultSetting({ type: "boolean", defaultValue: true }),
 			},
 			property: {
 				value: new DefaultSetting({ type: "boolean", defaultValue: true }),
@@ -664,6 +666,7 @@ const DEFAULT_STORAGE = {
 		external: {
 			tornstats: new DefaultSetting({ type: "boolean", defaultValue: false }),
 			yata: new DefaultSetting({ type: "boolean", defaultValue: false }),
+			prometheus: new DefaultSetting({ type: "boolean", defaultValue: false }),
 		},
 	},
 	filters: {
@@ -861,6 +864,7 @@ const DEFAULT_STORAGE = {
 	},
 	quick: {
 		items: new DefaultSetting({ type: "array", defaultValue: [] }),
+		factionItems: new DefaultSetting({ type: "array", defaultValue: [] }),
 		crimes: new DefaultSetting({ type: "array", defaultValue: [] }),
 		jail: new DefaultSetting({ type: "array", defaultValue: [] }),
 	},

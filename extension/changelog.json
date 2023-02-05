@@ -1,15 +1,59 @@
 [
 	{
-		"version": { "major": 6, "minor": 9, "build": 4 },
+		"version": { "major": 6, "minor": 11, "build": 0 },
 		"title": "Beta",
 		"date": false,
+		"logs": {
+			"features": [],
+			"fixes": [
+				{ "message": "Fix Auto Stock Fill.", "contributor": "TheFoxMan" },
+				{ "message": "Fix auction house filters when something isn't present.", "contributor": "DeKleineKobini" }
+			],
+			"changes": [
+				{ "message": "Stop features from running on 2FA page.", "contributor": "TheFoxMan" },
+				{ "message": "Disable dragging for quick items and crimes on mobile and tablets.", "contributor": "DeKleineKobini" },
+				{ "message": "Show gym bonus from your job.", "contributor": "DeKleineKobini" },
+				{ "message": "Show total gym bonus.", "contributor": "DeKleineKobini" },
+				{ "message": "Show 'item' for singular city finds.", "contributor": "h4xnoodle" },
+				{ "message": "Improve handling of error 17.", "contributor": "DeKleineKobini" }
+			],
+			"removed": []
+		}
+	},
+	{
+		"version": { "major": 6, "minor": 10, "build": 1 },
+		"date": "2023/01/16",
+		"logs": {
+			"features": [{ "message": "Filter on a lot of things in the faction armory.", "contributor": "DeKleineKobini" }],
+			"fixes": [
+				{ "message": "Fix faction armory tab detection if a tab is empty.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix faction quick item error while setting up drag listeners.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix cooldowns that go over 24h to not show that.", "contributor": "DeKleineKobini" },
+				{ "message": "Count book perks that are shown as perk for the merit.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix armor defence filter in the auction house not saving.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix armory filter loading on page load.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix chain CSV header missing.", "contributor": "DeKleineKobini" }
+			],
+			"changes": [
+				{ "message": "Also show faction quick items on the points, cashes, cesium and deposit tabs.", "contributor": "DeKleineKobini" },
+				{ "message": "Don't show the faction quick items on the temporary items page.", "contributor": "DeKleineKobini" },
+				{ "message": "Show the armory filter on the temporary items page.", "contributor": "DeKleineKobini" },
+				{ "message": "Add 22 missing weapon bonuses to the auction filter.", "contributor": "DeKleineKobini" },
+				{ "message": "Allow refills to be added in the faction quick items.", "contributor": "DeKleineKobini" }
+			]
+		}
+	},
+	{
+		"version": { "major": 6, "minor": 10, "build": 0 },
+		"date": "2023/01/11",
 		"logs": {
 			"features": [
 				{ "message": "Show last action on the OC page.", "contributor": "DeKleineKobini" },
 				{ "message": "Filter in the auction house.", "contributor": "DeKleineKobini" },
 				{ "message": "Ignore single forum posts using the forum menu.", "contributor": "DeKleineKobini" },
 				{ "message": "Add Prometheus as alternative travel table source.", "contributor": "DeKleineKobini" },
-				{ "message": "Quick items in the faction armory.", "contributor": "DeKleineKobini" }
+				{ "message": "Quick items in the faction armory.", "contributor": "DeKleineKobini" },
+				{ "message": "No confirm buy points from the market.", "contributor": "DeKleineKobini" }
 			],
 			"fixes": [
 				{ "message": "Fix company stock button updating.", "contributor": "DeKleineKobini" },
@@ -18,15 +62,16 @@
 					"message": "Fix item value for the first item of each category while adding items in your bazaar on mobile.",
 					"contributor": "DeKleineKobini"
 				},
-				{ "message": "Fix item value for the first item of each category in your inventory on mobile.", "contributor": "DeKleineKobini" }
+				{ "message": "Fix item value for the first item of each category in your inventory on mobile.", "contributor": "DeKleineKobini" },
+				{ "message": "Fix stats estimates on the HOF page.", "contributor": "DeKleineKobini" }
 			],
 			"changes": [
 				{ "message": "Add Sellout Slayer mission hint.", "contributor": "DeKleineKobini" },
 				{ "message": "Update CSV export to reflect Torn changes (add 'best' and remove 'bonus').", "contributor": "DeKleineKobini" },
 				{ "message": "Change torndata validity check to better avoid corrupt data.", "contributor": "DeKleineKobini" },
-				{ "message": "Show item name when using quick items when no API key is provided.", "contributor": "DeKleineKobini" }
-			],
-			"removed": []
+				{ "message": "Show item name when using quick items when no API key is provided.", "contributor": "DeKleineKobini" },
+				{ "message": "Round can energy so it shows the actual amount of energy.", "contributor": "DeKleineKobini" }
+			]
 		}
 	},
 	{

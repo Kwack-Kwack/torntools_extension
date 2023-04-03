@@ -202,7 +202,26 @@ async function setupPreferences(requireCleanup) {
 	searchPreferences();
 
 	const _preferences = document.find("#preferences");
-	_preferences.addEventListener("click", addSaveDialog);
+	_preferences.addEventListener("click", (event) => {
+		if (!event.target.closest("button.remove-icon-wrap, #hide-icons, #hide-casino-games, #hide-stocks, #hide-attack-options")) return;
+
+		addSaveDialog();
+	});
+	_preferences.addEventListener("change", (event) => {
+		if (event.target.tagName !== "INPUT" && event.target.tagName !== "SELECT") return;
+
+		addSaveDialog();
+	});
+	_preferences.addEventListener("input", (event) => {
+		if (event.target.tagName !== "INPUT") return;
+
+		addSaveDialog();
+	});
+	_preferences.addEventListener("dragend", (event) => {
+		if (!event.target.closest("#customLinks")) return;
+
+		addSaveDialog();
+	});
 
 	if (getSearchParameters().has("section"))
 		switchSection(_preferences.find(`#preferences > section > nav ul > li[name="${getSearchParameters().get("section")}"]`));
@@ -430,7 +449,7 @@ async function setupPreferences(requireCleanup) {
 		hideStocksParent.appendChild(document.createTextNode("Requires API data to be loaded."));
 	}
 
-	if (hasAPIData() && npcs.targets) {
+	if (npcs.targets) {
 		const alerts = _preferences.find("#npc-alerts");
 
 		for (const [id, npc] of Object.entries(npcs.targets)) {
@@ -470,6 +489,7 @@ async function setupPreferences(requireCleanup) {
 	_preferences.find("#external-tornstats").addEventListener("click", (event) => requestOrigin(FETCH_PLATFORMS.tornstats, event));
 	_preferences.find("#external-yata").addEventListener("click", (event) => requestOrigin(FETCH_PLATFORMS.yata, event));
 	_preferences.find("#external-prometheus").addEventListener("click", (event) => requestOrigin(FETCH_PLATFORMS.prometheus, event));
+	_preferences.find("#external-lzpt").addEventListener("click", (event) => requestOrigin(FETCH_PLATFORMS.lzpt, event));
 
 	_preferences.find("#global-reviveProvider").addEventListener("change", (event) => {
 		const provider = event.target.value;
@@ -539,7 +559,7 @@ async function setupPreferences(requireCleanup) {
 		_preferences.find(`input[name="themePage"][value="${settings.themes.pages}"]`).checked = true;
 		_preferences.find(`input[name="themeContainers"][value="${settings.themes.containers}"]`).checked = true;
 
-		for (const service of ["tornstats", "yata", "prometheus"]) {
+		for (const service of ["tornstats", "yata", "prometheus", "lzpt"]) {
 			_preferences.find(`#external-${service}`).checked = settings.external[service];
 		}
 
@@ -923,6 +943,7 @@ async function setupPreferences(requireCleanup) {
 		settings.external.tornstats = _preferences.find("#external-tornstats").checked;
 		settings.external.yata = _preferences.find("#external-yata").checked;
 		settings.external.prometheus = _preferences.find("#external-prometheus").checked;
+		settings.external.lzpt = _preferences.find("#external-lzpt").checked;
 
 		for (const type of ["pages", "scripts"]) {
 			for (const page in settings[type]) {
@@ -1216,6 +1237,7 @@ async function setupPreferences(requireCleanup) {
 			{ id: "external-tornstats", origin: FETCH_PLATFORMS.tornstats },
 			{ id: "external-yata", origin: FETCH_PLATFORMS.yata },
 			{ id: "external-prometheus", origin: FETCH_PLATFORMS.prometheus },
+			{ id: "external-lzpt", origin: FETCH_PLATFORMS.lzpt },
 		]) {
 			if (!_preferences.find(`#${id}`)?.checked) continue;
 
@@ -1253,14 +1275,9 @@ async function setupPreferences(requireCleanup) {
 		});
 	}
 
-	function addSaveDialog(event) {
-		if (
-			["INPUT", "SELECT"].includes(event.target.tagName) ||
-			event.target.closest("button.remove-icon-wrap, #hide-icons, #hide-casino-games, #hide-stocks, #hide-attack-options")
-		) {
-			if (isIframe) window.top.postMessage({ torntools: 1, show: 1 }, "*");
-			else document.find("#saveSettingsBar").classList.remove("tt-hidden");
-		}
+	function addSaveDialog() {
+		if (isIframe) window.top.postMessage({ torntools: 1, show: 1 }, "*");
+		else document.find("#saveSettingsBar").classList.remove("tt-hidden");
 	}
 
 	function revertSettings() {

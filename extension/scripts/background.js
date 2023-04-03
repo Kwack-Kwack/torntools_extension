@@ -1132,22 +1132,36 @@ async function updateFactionStakeouts() {
 		}
 
 		if (factionStakeouts[factionId].alerts) {
-			const { chainReaches, memberCountDrops, rankedWarStarts } = factionStakeouts[factionId].alerts;
+			const { chainReaches, memberCountDrops, rankedWarStarts, inRaid, inTerritoryWar } = factionStakeouts[factionId].alerts;
 
-			if (chainReaches) {
+			if (chainReaches !== false) {
 				const oldChainCount = oldData ? oldData.chain : false;
 				const chainCount = data.chain.current;
 
-				const key = `faction_${factionId}_chainReaches`;
-				if (chainCount >= chainReaches && (!oldChainCount || oldChainCount < chainCount) && !notifications.stakeouts[key]) {
-					if (settings.notifications.types.global)
-						notifications.stakeouts[key] = newNotification(
-							"Faction Stakeouts",
-							`${data.name} has reached a ${chainCount} chain.`,
-							`https://www.torn.com/factions.php?step=profile&ID=${factionId}#/`
-						);
-				} else if (chainCount < factionId) {
-					delete notifications.stakeouts[key];
+				if (chainReaches === 0) {
+					const key = `faction_${factionId}_chainDrops`;
+					if (chainCount < oldChainCount && oldChainCount >= 10 && !notifications.stakeouts[key]) {
+						if (settings.notifications.types.global)
+							notifications.stakeouts[key] = newNotification(
+								"Faction Stakeouts",
+								`${data.name} has dropped their ${oldChainCount} chain.`,
+								`https://www.torn.com/factions.php?step=profile&ID=${factionId}#/`
+							);
+					} else if (chainCount > 10) {
+						delete notifications.stakeouts[key];
+					}
+				} else {
+					const key = `faction_${factionId}_chainReaches`;
+					if (chainCount >= chainReaches && (!oldChainCount || oldChainCount < chainCount) && !notifications.stakeouts[key]) {
+						if (settings.notifications.types.global)
+							notifications.stakeouts[key] = newNotification(
+								"Faction Stakeouts",
+								`${data.name} has reached a ${chainCount} chain.`,
+								`https://www.torn.com/factions.php?step=profile&ID=${factionId}#/`
+							);
+					} else if (chainCount < oldChainCount) {
+						delete notifications.stakeouts[key];
+					}
 				}
 			}
 			if (memberCountDrops) {
@@ -1166,21 +1180,28 @@ async function updateFactionStakeouts() {
 					delete notifications.stakeouts[key];
 				}
 			}
-			if (rankedWarStarts) {
-				const wasWarring = oldData.rankedWar;
-				const isWarring = Object.keys(data.ranked_wars).length > 0;
 
-				const key = `faction_${factionId}_rankedWarStarts`;
-				if (isWarring && (!oldData || !wasWarring) && !notifications.stakeouts[key]) {
+			const handleWarStakeout = (type, wasValue, isValue, createMessage) => {
+				const key = `faction_${factionId}_${type}`;
+				if (isValue && (!oldData || !wasValue) && !notifications.stakeouts[key]) {
 					if (settings.notifications.types.global)
 						notifications.stakeouts[key] = newNotification(
 							"Faction Stakeouts",
-							`${data.name} is now in a ranked war.`,
+							createMessage(),
 							`https://www.torn.com/factions.php?step=profile&ID=${factionId}#/`
 						);
-				} else if (data.status.state !== "Okay") {
+				} else if (!isValue) {
 					delete notifications.stakeouts[key];
 				}
+			};
+			if (rankedWarStarts) {
+				handleWarStakeout("rankedWarStarts", oldData.rankedWar, Object.keys(data.ranked_wars).length > 0, () => `${data.name} is now in a ranked war.`);
+			}
+			if (inRaid) {
+				handleWarStakeout("inRaid", oldData.raid, Array.isArray(data.raid_wars), () => `${data.name} is now in a raid.`);
+			}
+			if (inTerritoryWar) {
+				handleWarStakeout("inTerritoryWar", oldData.territoryWar, Array.isArray(data.territory_wars), () => `${data.name} is now in a territory war.`);
 			}
 		}
 
@@ -1192,6 +1213,8 @@ async function updateFactionStakeouts() {
 				maximum: data.capacity,
 			},
 			rankedWar: Object.keys(data.ranked_wars).length > 0,
+			raid: Array.isArray(data.raid_wars),
+			territoryWar: Array.isArray(data.territory_wars),
 		};
 	}
 	factionStakeouts.date = now;
@@ -1212,16 +1235,7 @@ async function updateTorndata() {
 	await ttStorage.set({ torndata: data });
 
 	function isValidTorndata(data) {
-		return (
-			!!data &&
-			Object.keys(data).length > 0 &&
-			// Validate items object.
-			data.items &&
-			Object.keys(data.items).length > 0 &&
-			// Validate stats object to have a point price.
-			data.stats &&
-			data.stats.points_averagecost
-		);
+		return !!data && !data.error;
 	}
 }
 
@@ -1323,8 +1337,8 @@ async function updateFactiondata() {
 }
 
 async function updateNPCs() {
-	const { yata: useYata, tornstats: useTornstats } = settings.external;
-	if (!useYata && !useTornstats) {
+	const { yata: useYata, tornstats: useTornstats, lzpt: useLzpt } = settings.external;
+	if (!useYata && !useTornstats && !useLzpt) {
 		await ttStorage.set({ npcs: {} });
 		return { updated: false };
 	}
@@ -1346,20 +1360,15 @@ async function updateNPCs() {
 
 	if (npcs && npcs.next_update && npcs.next_update > now) {
 		updated = await updateLevels();
-	} else if (useYata && useTornstats) {
-		switch (settings.pages.sidebar.npcLootTimesService) {
-			case "tornstats":
-				updated = await fetchTornStats();
-				break;
-			case "yata":
-			default:
-				updated = await fetchYata();
-				break;
-		}
-	} else if (useYata) {
-		updated = await fetchYata();
-	} else if (useTornstats) {
-		updated = await fetchTornStats();
+	} else {
+		const services = [
+			{ service: "loot-rangers", method: fetchLootRangers, check: useLzpt },
+			{ service: "yata", method: fetchYata, check: useYata },
+			{ service: "tornstats", method: fetchTornStats, check: useTornstats && hasAPIData() },
+		].filter((s) => s.check);
+		const service = services.find((s) => s.service === settings.pages.sidebar.npcLootTimesService) || services[0];
+
+		updated = await service.method();
 	}
 
 	if (updated || !npcUpdater) triggerUpdate();
@@ -1391,6 +1400,7 @@ async function updateNPCs() {
 					5: hospital + TO_MILLIS.MINUTES * 450,
 				},
 				name: NPCS[id] ?? "Unknown",
+				order: id,
 			};
 
 			npcs.targets[id].current = getCurrentLevel(npcs.targets[id]);
@@ -1423,10 +1433,46 @@ async function updateNPCs() {
 					5: npc.loot_5 * 1000,
 				},
 				name: npc.name,
+				order: npc.torn_id,
 			};
 
 			npcs.targets[npc.torn_id].current = getCurrentLevel(npcs.targets[npc.torn_id]);
 		}
+
+		await ttStorage.set({ npcs });
+		return true;
+	}
+
+	async function fetchLootRangers() {
+		const data = await fetchData("lzpt", { section: "loot" });
+		const planned = data.time.clear;
+
+		npcs = {
+			next_update: now + TO_MILLIS.MINUTES * (planned === 0 ? 1 : 15),
+			service: "Loot Rangers",
+			targets: {},
+		};
+
+		for (let [id, npc] of Object.entries(data.npcs)) {
+			id = parseInt(id);
+			const hospital = npc.hosp_out * 1000;
+
+			npcs.targets[id] = {
+				levels: {
+					1: hospital,
+					2: hospital + TO_MILLIS.MINUTES * 30,
+					3: hospital + TO_MILLIS.MINUTES * 90,
+					4: hospital + TO_MILLIS.MINUTES * 210,
+					5: hospital + TO_MILLIS.MINUTES * 450,
+				},
+				name: npc.name || (NPCS[id] ?? "Unknown"),
+				order: data.order.findIndex((o) => o === id),
+			};
+
+			npcs.targets[id].current = getCurrentLevel(npcs.targets[id]);
+		}
+
+		npcs.planned = planned === 0 ? false : planned * 1000;
 
 		await ttStorage.set({ npcs });
 		return true;
@@ -1490,6 +1536,29 @@ async function updateNPCs() {
 				`https://www.torn.com/profiles.php?XID=${id}`
 			);
 			alerts++;
+		}
+		if (settings.notifications.types.npcPlannedEnabled && npcs.planned) {
+			for (const minutes of settings.notifications.types.npcPlanned.sort()) {
+				const key = `npc_planned_${minutes}`;
+
+				const time = npcs.planned;
+				if (!time) {
+					delete notifications.npcs[key];
+					continue;
+				}
+
+				const left = time - now;
+				const _minutes = Math.ceil(left / TO_MILLIS.MINUTES);
+				if (_minutes > minutes || _minutes < 0) {
+					delete notifications.npcs[key];
+					continue;
+				}
+
+				if (notifications.npcs[key]) continue;
+
+				notifications.npcs[key] = newNotification("NPC Loot", `There is a planned attack in ${formatTime(left, { type: "wordTimer" })}.`);
+				alerts++;
+			}
 		}
 
 		return alerts;

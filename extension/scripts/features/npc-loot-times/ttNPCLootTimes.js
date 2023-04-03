@@ -15,7 +15,7 @@
 			storage: ["settings.pages.sidebar.npcLootTimes", "npcs.targets"],
 		},
 		() => {
-			if (!settings.external.yata && !settings.external.tornstats) return "YATA or TornStats not enabled";
+			if (!settings.external.yata && !settings.external.tornstats && !settings.external.lzpt) return "YATA, TornStats or LZPT not enabled";
 		}
 	);
 
@@ -29,23 +29,53 @@
 		});
 
 		const now = Date.now();
-		for (const [id, npc] of Object.entries(npcs.targets)) {
-			const status = npc.current === 0 ? "Hospital" : "Okay";
 
+		const timerSettings = { type: "wordTimer", extraShort: true };
+		if ("planned" in npcs) {
+			let timer;
+			if (npcs.planned) {
+				const left = npcs.planned - now;
+				timer = document.newElement({
+					type: "span",
+					class: "timer",
+					text: formatTime(left, timerSettings),
+					dataset: {
+						seconds: (left / TO_MILLIS.SECONDS).dropDecimals(),
+						timeSettings: timerSettings,
+					},
+				});
+				countdownTimers.push(timer);
+			} else {
+				timer = document.newElement({ type: "span", class: "timer", text: "Not Scheduled" });
+			}
+
+			content.appendChild(
+				document.newElement({
+					type: "div",
+					class: "tt-npc",
+					children: [
+						document.newElement({ type: "span", class: "npc-name", text: "Planned Attack" }),
+						document.newElement({ type: "div", class: "npc-information", children: [timer] }),
+					],
+				})
+			);
+		}
+
+		for (const [id, npc] of Object.entries(npcs.targets).sort(([, a], [, b]) => a.order - b.order)) {
+			const status = npc.current === 0 ? "Hospital" : `Level ${npc.current}`;
 			const next = npc.current !== 5 ? npc.current + 1 : false;
 
 			let timer;
 			if (next) {
 				const left = npc.levels[next] - now;
 
-				const settings = { type: "wordTimer", extraShort: true };
 				timer = document.newElement({
 					type: "span",
 					class: "timer",
 					text: formatTime(left, settings),
 					dataset: {
 						seconds: (left / TO_MILLIS.SECONDS).dropDecimals(),
-						timeSettings: settings,
+						timeSettings: timerSettings,
 					},
 				});
 
@@ -61,13 +91,7 @@
 						document.newElement({
 							type: "div",
 							class: "npc-information",
-							children: [
-								document.newElement({ type: "span", class: `status ${status.toLowerCase()}`, text: status }),
-								document.newElement({ type: "span", text: " / " }),
-								document.newElement({ type: "span", class: "loot-level", text: npc.current }),
-								document.newElement({ type: "span", text: " / " }),
-								timer,
-							],
+							children: [document.newElement({ type: "span", class: npc.current === 0 ? "status hospital" : "status", text: status }), timer],
 						}),
 					],
 				})

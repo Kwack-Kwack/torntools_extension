@@ -337,6 +337,8 @@ const DEFAULT_STORAGE = {
 				stocks: new DefaultSetting({ type: "object", defaultValue: {} }),
 				npcsGlobal: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				npcs: new DefaultSetting({ type: "array", defaultValue: [] }),
+				npcPlannedEnabled: new DefaultSetting({ type: "boolean", defaultValue: true }),
+				npcPlanned: new DefaultSetting({ type: "array", defaultValue: [] }),
 			},
 		},
 		apiUsage: {
@@ -437,6 +439,7 @@ const DEFAULT_STORAGE = {
 				npcLootTimes: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				npcLootTimesService: new DefaultSetting({ type: "string", defaultValue: "tornstats" }),
 				cooldownEndTimes: new DefaultSetting({ type: "boolean", defaultValue: false }),
+				companyAddictionLevel: new DefaultSetting({ type: "boolean", defaultValue: true }),
 			},
 			popup: {
 				dashboard: new DefaultSetting({ type: "boolean", defaultValue: true }),
@@ -567,7 +570,7 @@ const DEFAULT_STORAGE = {
 			casino: {
 				netTotal: new DefaultSetting({ type: "boolean", defaultValue: true }),
 				blackjack: new DefaultSetting({ type: "boolean", defaultValue: true }),
-				highlow: new DefaultSetting({ type: "boolean", defaultValue: true }),
+				highlow: new DefaultSetting({ type: "boolean", defaultValue: false }),
 				highlowMovement: new DefaultSetting({ type: "boolean", defaultValue: true }),
 			},
 			racing: {
@@ -690,6 +693,7 @@ const DEFAULT_STORAGE = {
 			tornstats: new DefaultSetting({ type: "boolean", defaultValue: false }),
 			yata: new DefaultSetting({ type: "boolean", defaultValue: false }),
 			prometheus: new DefaultSetting({ type: "boolean", defaultValue: false }),
+			lzpt: new DefaultSetting({ type: "boolean", defaultValue: false }),
 		},
 	},
 	filters: {
@@ -1329,6 +1333,8 @@ const API_USAGE = {
 			total: true,
 		},
 		job: {
+			position: true,
+			company_id: true,
 			company_type: true,
 		},
 		weaponexp: {
@@ -1372,6 +1378,13 @@ const API_USAGE = {
 					last_action: {
 						relative: true,
 					},
+				},
+			},
+		},
+		company_employees: {
+			"*": {
+				effectiveness: {
+					addiction: true,
 				},
 			},
 		},
@@ -1478,6 +1491,7 @@ const API_SELECTIONS = {
 	],
 	company: [
 		"profile", // target
+		"employees",
 	],
 	item_market: ["bazaar", "itemmarket"],
 	torn: ["bank", "education", "honors", "items", "medals", "pawnshop", "properties", "stocks", "stats"],
